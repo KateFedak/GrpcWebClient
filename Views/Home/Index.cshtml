@@ -2,7 +2,68 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="py-3 text-center">
+        <h2>Employee's List</h2>
+        <p class="lead">A CRUD made with ASP.NET Core, Bootstrap and gRPC</p>
+    </div>
+    <button type="button" class="btn redgate" data-toggle="modal" data-target="#productModal" onclick="clearStuff();">New Employee</button><br /><br />
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    Salary
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="productModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Employee</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="EmployeeId">ID</label>
+                        <input type="text" class="form-control" id="EmployeeID" placeholder="Id" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="FirstName">FirstName</label>
+                        <input type="text" class="form-control" id="FirstName" placeholder="FirstName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">LastName</label>
+                        <input type="number" class="form-control" id="LastName" placeholder="LastName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Salary">Salary</label>
+                        <input type="text" class="form-control" id="Salary" placeholder="Salary" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn redgate" id="btnAddEmployee" onclick="return AddEmployee();">Add</button>
+                <button type="button" class="btn redgate" id="btnUpdateEmployee" style="display:none;" onclick="UpdateEmployee();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
