@@ -24,6 +24,64 @@ function LoadEmployee() {
         }
     });
 }
+function SetUpEditModal(id) {
+    $('form input').css('border-color', 'grey');
+    $('#employeeModal h4').text('Edit Employee');
+
+    $.ajax({
+        url: "/api/employee/" + id,
+        typr: "GET",
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            $('#EmployeeID').val(result.employeeId);
+            $('#FirstName').val(result.firstname);
+            $('#LastName').val(result.lastname);
+            $('#Salary').val(result.salary);
+            $('#employeeModal').modal('show');
+            $('#btnUpdateEmployee').show();
+            $('#btnAddEmployee').hide();
+        },
+        error: function (message) {
+            console.log(message.responseText);
+        }
+    });
+    return false;
+}
+function UpdateEmployee() {
+    
+
+    var employeeObj = {
+        EmployeeID: parseInt($('#EmployeeID').val()),
+        FirstName: $('#FirstName').val(),
+        LastName: $('#LastName').val(),
+        Salary: parseFloat($('#Salary').val()),
+    };
+
+    $.ajax({
+        url: "/api/employee",
+        data: JSON.stringify(employeeObj),
+        type: "PUT",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function () {
+            LoadEmployee();
+
+            $('#employeeModal').modal('hide');
+
+            clearStuff();
+        },
+        error: function (message) {
+            console.log(message.responseText);
+        }
+    });
+}
+function clearStuff() {
+    $('form').trigger("reset");
+    $('#btnUpdateEmployee').hide();
+    $('#employeeModal h4').text('Add Employee');
+    $('#btnAddEmployee').show();
+}
 function DeleteEmployee(id) {
     if (confirm("Are you sure?")) {
         $.ajax({
@@ -40,4 +98,5 @@ function DeleteEmployee(id) {
         });
     }
 }
+
 LoadEmployee();
