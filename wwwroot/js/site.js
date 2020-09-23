@@ -24,6 +24,27 @@ function LoadEmployee() {
         }
     });
 }
+function AddEmployee() {
+    var employeeObj = {
+        FirstName: $('#FirstName').val(),
+        LastName: $('#LastName').val(),
+        Salary: parseFloat($('#Salary').val()),
+    };
+
+    $.ajax({
+        url: "/api/employee",
+        data: JSON.stringify(employeeObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        success: function () {
+            LoadEmployee();
+            $('#employeeModal').modal('hide');
+        },
+        error: function (message) {
+            console.log(message.responseText);
+        }
+    });
+}
 function SetUpEditModal(id) {
     $('form input').css('border-color', 'grey');
     $('#employeeModal h4').text('Edit Employee');
@@ -49,15 +70,12 @@ function SetUpEditModal(id) {
     return false;
 }
 function UpdateEmployee() {
-    
-
     var employeeObj = {
         EmployeeID: parseInt($('#EmployeeID').val()),
         FirstName: $('#FirstName').val(),
         LastName: $('#LastName').val(),
         Salary: parseFloat($('#Salary').val()),
     };
-
     $.ajax({
         url: "/api/employee",
         data: JSON.stringify(employeeObj),
@@ -98,5 +116,4 @@ function DeleteEmployee(id) {
         });
     }
 }
-
 LoadEmployee();
