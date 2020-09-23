@@ -25,6 +25,10 @@ function LoadEmployee() {
     });
 }
 function AddEmployee() {
+    var res = validateForm();
+    if (res == false) {
+        return false;
+    }
     var employeeObj = {
         FirstName: $('#FirstName').val(),
         LastName: $('#LastName').val(),
@@ -70,6 +74,9 @@ function SetUpEditModal(id) {
     return false;
 }
 function UpdateEmployee() {
+    if (!validateForm()) {
+        return false;
+    }
     var employeeObj = {
         EmployeeID: parseInt($('#EmployeeID').val()),
         FirstName: $('#FirstName').val(),
@@ -115,5 +122,31 @@ function DeleteEmployee(id) {
             }
         });
     }
+}
+function validateForm() {
+    var isValid = true;
+    if ($('#FirstName').val().trim() == "") {
+        $('#FirstName').css('border-color', '#c00');
+        isValid = false;
+    }
+    else {
+        $('#FirstName').css('border-color', 'grey');
+    }
+    if ($('#LastName').val().trim() == "") {
+        $('#LastName').css('border-color', '#c00');
+        isValid = false;
+    }
+    else {
+        $('#LastName').css('border-color', 'grey');
+    }
+    if ($('#Salary').val().trim() == "") {
+        $('#Salary').css('border-color', '#c00');
+        isValid = false;
+    }
+    else {
+        $('#Salary').css('border-color', 'grey');
+    }
+
+    return isValid;
 }
 LoadEmployee();
