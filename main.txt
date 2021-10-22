@@ -1,0 +1,33 @@
+onsole.WriteLine("*************Exchange Rates ********************");
+            Console.WriteLine("Write amount:");
+            double amount = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Write currency:");
+            string currency = Console.ReadLine();
+
+            string sql = "SELECT * FROM Users";
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=usersdb;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+                // перебор всех таблиц
+                foreach (DataTable dt in ds.Tables)
+                {
+                    Console.WriteLine(dt.TableName); // название таблицы
+                                                     // перебор всех столбцов
+                    foreach (DataColumn column in dt.Columns)
+                        Console.Write("\t{0}", column.ColumnName);
+                    Console.WriteLine();
+                    // перебор всех строк таблицы
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        // получаем все ячейки строки
+                        var cells = row.ItemArray;
+                        foreach (object cell in cells)
+                            Console.Write("\t{0}", cell);
+                        Console.WriteLine();
+                    }
+                }
